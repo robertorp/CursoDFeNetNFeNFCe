@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aula1Configuracao", "CursoNFeNFCeDllDFeNET\Aula1Configuracao.csproj", "{874B981D-D7D6-44C6-BB57-25B01B2F04B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aula1Configuracao", "CursoNFeNFCeDllDFeNET\Aula1Configuracao.csproj", "{874B981D-D7D6-44C6-BB57-25B01B2F04B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aula2ConsultaStatus", "Aula2ConsultaStatus\Aula2ConsultaStatus.csproj", "{F91F8508-A0F2-4A4F-B344-7EFF46AF4A47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aula2ConsultaStatus", "Aula2ConsultaStatus\Aula2ConsultaStatus.csproj", "{F91F8508-A0F2-4A4F-B344-7EFF46AF4A47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtilsDFeNFe", "UtilsDFeNFe\UtilsDFeNFe.csproj", "{2C48A018-E6A9-4EDE-A6D3-4FCB42704C2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{F91F8508-A0F2-4A4F-B344-7EFF46AF4A47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F91F8508-A0F2-4A4F-B344-7EFF46AF4A47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F91F8508-A0F2-4A4F-B344-7EFF46AF4A47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C48A018-E6A9-4EDE-A6D3-4FCB42704C2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C48A018-E6A9-4EDE-A6D3-4FCB42704C2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C48A018-E6A9-4EDE-A6D3-4FCB42704C2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C48A018-E6A9-4EDE-A6D3-4FCB42704C2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
