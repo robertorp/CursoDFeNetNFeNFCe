@@ -23,7 +23,7 @@ namespace Aula2ConsultaStatus
                     CacheId = "b2543ace-2708-4660-8ea8-89ca845d10bf",
                     ManterDadosEmCache = true,
                     //Senha = "minhasenha do certificado digital",
-                    Serial = "238932939838932893289"
+                    Serial = "65E7A12445262E37"
                 },
                 DefineVersaoServicosAutomaticamente = true,
                 VersaoLayout = VersaoServico.Versao400,
