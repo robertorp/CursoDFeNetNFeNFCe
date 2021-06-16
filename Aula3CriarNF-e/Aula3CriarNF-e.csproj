@@ -1,17 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>Aula3CriarNF_e</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Bogus" Version="33.0.2" />
     <PackageReference Include="Zeus.Net.NFe.NFCe" Version="1.0.1.1089" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\UtilsDFeNFe\UtilsDFeNFe.csproj" />
   </ItemGroup>
 
 </Project>
