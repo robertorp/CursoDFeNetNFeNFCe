@@ -20,6 +20,8 @@ using NFe.Classes.Informacoes.Observacoes;
 using NFe.Classes.Informacoes.Pagamento;
 using NFe.Classes.Informacoes.Total;
 using NFe.Classes.Informacoes.Transporte;
+using NFe.Classes.Servicos.Tipos;
+using NFe.Servicos;
 using NFe.Utils;
 using NFe.Utils.NFe;
 
@@ -53,6 +55,12 @@ namespace Aula3CriarNF_e
             nfe.infNFe.pag = ObterPagamento(nfe.infNFe.total);
 
             nfe.Assina(configuracaoServico);
+
+            var servicos = new ServicosNFe(configuracaoServico);
+
+            var respostaAutorizacao = servicos.NFeAutorizacao(1, IndicadorSincronizacao.Assincrono, new List<NFe.Classes.NFe> {nfe}, false);
+
+
         }
 
         private static ConfiguracaoServico ObterConfiguracoes()
@@ -96,7 +104,6 @@ namespace Aula3CriarNF_e
                 cNF = _faker.Random.Number(8, 8).ToString(),
                 tpEmis = TipoEmissao.teNormal,
                 mod = ModeloDocumento.NFe,
-                dSaiEnt = DateTime.Now,
                 cMunFG = 5208707,
                 idDest = DestinoOperacao.doInterna,
                 finNFe = FinalidadeNFe.fnNormal,
@@ -129,7 +136,7 @@ namespace Aula3CriarNF_e
                     cMun = 5208707,
                     fone = long.Parse(_faker.Phone.PhoneNumber("###########")),
                     nro = _faker.Address.BuildingNumber(),
-                    xBairro = _faker.Address.CityPrefix(),
+                    xBairro = _faker.Address.Direction(),
                     xLgr = _faker.Address.StreetAddress(),
                     xMun = _faker.Address.City(),
                     xCpl = _faker.Address.Direction()
@@ -154,7 +161,7 @@ namespace Aula3CriarNF_e
                     cMun = 5208707,
                     fone = long.Parse(_faker.Phone.PhoneNumber("###########")),
                     nro = _faker.Address.BuildingNumber(),
-                    xBairro = _faker.Address.CityPrefix(),
+                    xBairro = _faker.Address.Direction(),
                     xLgr = _faker.Address.StreetAddress(),
                     xMun = _faker.Address.City(),
                     xCpl = _faker.Address.Direction()
