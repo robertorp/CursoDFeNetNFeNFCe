@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using Bogus;
 using Bogus.Extensions.Brazil;
 using DFe.Classes.Entidades;
 using DFe.Classes.Flags;
+using DFe.Utils;
 using NFe.Classes.Informacoes;
 using NFe.Classes.Informacoes.Destinatario;
 using NFe.Classes.Informacoes.Detalhe;
@@ -18,6 +20,8 @@ using NFe.Classes.Informacoes.Observacoes;
 using NFe.Classes.Informacoes.Pagamento;
 using NFe.Classes.Informacoes.Total;
 using NFe.Classes.Informacoes.Transporte;
+using NFe.Utils;
+using NFe.Utils.NFe;
 
 namespace Aula3CriarNF_e
 {
@@ -29,10 +33,13 @@ namespace Aula3CriarNF_e
         {
             _faker = new Faker(locale: "pt_BR");
 
+            var configuracaoServico = ObterConfiguracoes();
+
             var nfe = new NFe.Classes.NFe
             {
                 infNFe = new infNFe
                 {
+                    versao = "4.00",
                     ide = ObterIdentificacao(),
                     emit = ObterEmitente(),
                     dest = ObterDestinatario(),
@@ -44,22 +51,38 @@ namespace Aula3CriarNF_e
 
             nfe.infNFe.total = ObterTotal(nfe);
             nfe.infNFe.pag = ObterPagamento(nfe.infNFe.total);
+
+            nfe.Assina(configuracaoServico);
         }
 
-        private static List<pag> ObterPagamento(total total)
+        private static ConfiguracaoServico ObterConfiguracoes()
         {
-            var pag = new pag();
-
-            pag.detPag = new List<detPag>
+            return new ConfiguracaoServico
             {
-                new detPag
+                Certificado = new ConfiguracaoCertificado
                 {
-                    vPag = total.ICMSTot.vNF,
-                    tPag = FormaPagamento.fpDinheiro
-                }
+                    TipoCertificado = TipoCertificado.A1Repositorio,
+                    //Arquivo = @"C:\Arquivo.pfx"
+                    //ArrayBytesArquivo = certificado em bytes
+                    CacheId = "b2543ace-2708-4660-8ea8-89ca845d10bf",
+                    ManterDadosEmCache = true,
+                    //Senha = "minhasenha do certificado digital",
+                    Serial = "7CF486CADF6F2C54"
+                },
+                DefineVersaoServicosAutomaticamente = true,
+                VersaoLayout = VersaoServico.Versao400,
+                cUF = Estado.MT,
+                DiretorioSalvarXml = @"C:\MeuSistema\Xmls",
+                SalvarXmlServicos = true,
+                DiretorioSchemas = @"C:\MeuSistema\Schemas",
+                ModeloDocumento = ModeloDocumento.NFe,
+                ProtocoloDeSeguranca = SecurityProtocolType.Tls12,
+                RemoverAcentos = true,
+                TimeOut = 30000,
+                ValidarCertificadoDoServidor = false,
+                tpAmb = TipoAmbiente.Homologacao,
+                tpEmis = TipoEmissao.teNormal
             };
-
-            return new List<pag> { pag };
         }
 
         private static ide ObterIdentificacao()
@@ -224,6 +247,22 @@ namespace Aula3CriarNF_e
             };
 
             return total;
+        }
+
+        private static List<pag> ObterPagamento(total total)
+        {
+            var pag = new pag();
+
+            pag.detPag = new List<detPag>
+            {
+                new detPag
+                {
+                    vPag = total.ICMSTot.vNF,
+                    tPag = FormaPagamento.fpDinheiro
+                }
+            };
+
+            return new List<pag> { pag };
         }
     }
 }
