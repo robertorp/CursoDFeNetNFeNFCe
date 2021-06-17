@@ -59,8 +59,6 @@ namespace Aula3CriarNF_e
             var servicos = new ServicosNFe(configuracaoServico);
 
             var respostaAutorizacao = servicos.NFeAutorizacao(1, IndicadorSincronizacao.Assincrono, new List<NFe.Classes.NFe> {nfe}, false);
-
-
         }
 
         private static ConfiguracaoServico ObterConfiguracoes()
