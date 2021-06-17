@@ -1,9 +1,12 @@
-﻿using Bogus;
+﻿using System;
+using Bogus;
 using Bogus.Extensions.Brazil;
 using DFe.Classes.Entidades;
+using DFe.Classes.Flags;
 using NFe.Classes.Informacoes;
 using NFe.Classes.Informacoes.Emitente;
 using NFe.Classes.Informacoes.Identificacao;
+using NFe.Classes.Informacoes.Identificacao.Tipos;
 
 namespace Aula3CriarNF_e
 {
@@ -29,7 +32,25 @@ namespace Aula3CriarNF_e
         {
             var identificacao = new ide
             {
-                
+                dhEmi = DateTimeOffset.Now,
+                cUF = Estado.GO,
+                serie = 1,
+                nNF = 1,
+                cNF = _faker.Random.Number(8, 8).ToString(),
+                tpEmis = TipoEmissao.teNormal,
+                mod = ModeloDocumento.NFe,
+                dSaiEnt = DateTime.Now,
+                cMunFG = 5208707,
+                idDest = DestinoOperacao.doInterna,
+                finNFe = FinalidadeNFe.fnNormal,
+                indFinal = ConsumidorFinal.cfConsumidorFinal,
+                indPres = PresencaComprador.pcPresencial,
+                natOp = "Vendas de Mercadorias",
+                procEmi = ProcessoEmissao.peAplicativoContribuinte,
+                tpAmb = TipoAmbiente.Homologacao,
+                tpImp = TipoImpressao.tiRetrato,
+                tpNF = TipoNFe.tnSaida,
+                verProc = "Meu Sistema V1.0"
             };
 
             return identificacao;
