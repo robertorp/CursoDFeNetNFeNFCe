@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using Bogus;
 using Bogus.Extensions.Brazil;
 using DFe.Classes.Entidades;
 using DFe.Classes.Flags;
 using NFe.Classes.Informacoes;
 using NFe.Classes.Informacoes.Destinatario;
+using NFe.Classes.Informacoes.Detalhe;
+using NFe.Classes.Informacoes.Detalhe.Tributacao;
+using NFe.Classes.Informacoes.Detalhe.Tributacao.Estadual;
+using NFe.Classes.Informacoes.Detalhe.Tributacao.Estadual.Tipos;
 using NFe.Classes.Informacoes.Emitente;
 using NFe.Classes.Informacoes.Identificacao;
 using NFe.Classes.Informacoes.Identificacao.Tipos;
@@ -26,6 +31,7 @@ namespace Aula3CriarNF_e
                     ide = ObterIdentificacao(),
                     emit = ObterEmitente(),
                     dest = ObterDestinatario(),
+                    det = ObterDetalhesProdutos()
                 }
             };
         }
@@ -107,6 +113,57 @@ namespace Aula3CriarNF_e
             };
 
             return destinatario;
+        }
+
+        private static List<det> ObterDetalhesProdutos()
+        {
+            var quantidadeDetalhesProdutos = 5;
+            var detalhesProdutos = new List<det>();
+
+            for (var i = 0; i < quantidadeDetalhesProdutos; i++)
+            {
+                var valorProduto = decimal.Parse(_faker.Commerce.Price(1.00m, 200m, 2));
+
+
+                detalhesProdutos.Add(new det
+                {
+                    nItem = i+1,
+                    prod = new prod
+                    {
+                        vOutro = 0.0m,
+                        vSeg = 0.0m,
+                        vFrete = 0.0m,
+                        cProd = _faker.Random.String2(10),
+                        vDesc = 0.0m,
+                        vProd = valorProduto,
+                        qTrib = 1.0m,
+                        uTrib = "UN",
+                        vUnTrib = valorProduto,
+                        qCom = 1.0m,
+                        uCom = "UN",
+                        vUnCom = valorProduto,
+                        xProd = _faker.Commerce.ProductName(),
+                        CFOP = 5102,
+                        indTot = IndicadorTotal.ValorDoItemCompoeTotalNF,
+                        NCM = "83833333"
+                    },
+                    infAdProd = _faker.Commerce.ProductDescription(),
+                    imposto = new imposto
+                    {
+                        ICMS = new ICMS
+                        {
+                            TipoICMS = new ICMSSN102
+                            {
+                                CSOSN = Csosnicms.Csosn102,
+                                orig = OrigemMercadoria.OmNacional
+                            }
+                        }
+                    }
+                });
+            }
+
+
+            return detalhesProdutos;
         }
     }
 }
