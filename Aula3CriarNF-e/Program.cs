@@ -4,6 +4,7 @@ using Bogus.Extensions.Brazil;
 using DFe.Classes.Entidades;
 using DFe.Classes.Flags;
 using NFe.Classes.Informacoes;
+using NFe.Classes.Informacoes.Destinatario;
 using NFe.Classes.Informacoes.Emitente;
 using NFe.Classes.Informacoes.Identificacao;
 using NFe.Classes.Informacoes.Identificacao.Tipos;
@@ -23,7 +24,8 @@ namespace Aula3CriarNF_e
                 infNFe = new infNFe
                 {
                     ide = ObterIdentificacao(),
-                    emit = ObterEmitente()
+                    emit = ObterEmitente(),
+                    dest = ObterDestinatario(),
                 }
             };
         }
@@ -80,6 +82,31 @@ namespace Aula3CriarNF_e
             };
 
             return emitente;
+        }
+
+        private static dest ObterDestinatario()
+        {
+            var destinatario = new dest(VersaoServico.Versao400)
+            {
+                CPF = _faker.Person.Cpf(includeFormatSymbols:false),
+                email = _faker.Person.Email,
+                xNome = $"{_faker.Person.FullName}",
+                indIEDest = indIEDest.NaoContribuinte,
+                enderDest = new enderDest
+                {
+                    CEP = _faker.Address.ZipCode("########"),
+                    UF = "GO",
+                    cMun = 5208707,
+                    fone = long.Parse(_faker.Phone.PhoneNumber("###########")),
+                    nro = _faker.Address.BuildingNumber(),
+                    xBairro = _faker.Address.CityPrefix(),
+                    xLgr = _faker.Address.StreetAddress(),
+                    xMun = _faker.Address.City(),
+                    xCpl = _faker.Address.Direction()
+                }
+            };
+
+            return destinatario;
         }
     }
 }
