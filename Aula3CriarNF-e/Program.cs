@@ -14,6 +14,8 @@ using NFe.Classes.Informacoes.Detalhe.Tributacao.Estadual.Tipos;
 using NFe.Classes.Informacoes.Emitente;
 using NFe.Classes.Informacoes.Identificacao;
 using NFe.Classes.Informacoes.Identificacao.Tipos;
+using NFe.Classes.Informacoes.Observacoes;
+using NFe.Classes.Informacoes.Pagamento;
 using NFe.Classes.Informacoes.Total;
 using NFe.Classes.Informacoes.Transporte;
 
@@ -35,11 +37,29 @@ namespace Aula3CriarNF_e
                     emit = ObterEmitente(),
                     dest = ObterDestinatario(),
                     det = ObterDetalhesProdutos(),
-                    transp = new transp {modFrete = ModalidadeFrete.mfSemFrete}
+                    transp = new transp {modFrete = ModalidadeFrete.mfSemFrete},
+                    infAdic = new infAdic {infCpl = "Observação NF-e"}
                 }
             };
 
             nfe.infNFe.total = ObterTotal(nfe);
+            nfe.infNFe.pag = ObterPagamento(nfe.infNFe.total);
+        }
+
+        private static List<pag> ObterPagamento(total total)
+        {
+            var pag = new pag();
+
+            pag.detPag = new List<detPag>
+            {
+                new detPag
+                {
+                    vPag = total.ICMSTot.vNF,
+                    tPag = FormaPagamento.fpDinheiro
+                }
+            };
+
+            return new List<pag> { pag };
         }
 
         private static ide ObterIdentificacao()
