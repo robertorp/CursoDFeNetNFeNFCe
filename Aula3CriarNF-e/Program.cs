@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Bogus;
 using Bogus.Extensions.Brazil;
 using DFe.Classes.Entidades;
@@ -13,6 +14,8 @@ using NFe.Classes.Informacoes.Detalhe.Tributacao.Estadual.Tipos;
 using NFe.Classes.Informacoes.Emitente;
 using NFe.Classes.Informacoes.Identificacao;
 using NFe.Classes.Informacoes.Identificacao.Tipos;
+using NFe.Classes.Informacoes.Total;
+using NFe.Classes.Informacoes.Transporte;
 
 namespace Aula3CriarNF_e
 {
@@ -31,9 +34,12 @@ namespace Aula3CriarNF_e
                     ide = ObterIdentificacao(),
                     emit = ObterEmitente(),
                     dest = ObterDestinatario(),
-                    det = ObterDetalhesProdutos()
+                    det = ObterDetalhesProdutos(),
+                    transp = new transp {modFrete = ModalidadeFrete.mfSemFrete}
                 }
             };
+
+            nfe.infNFe.total = ObterTotal(nfe);
         }
 
         private static ide ObterIdentificacao()
@@ -162,8 +168,42 @@ namespace Aula3CriarNF_e
                 });
             }
 
-
             return detalhesProdutos;
+        }
+
+        private static total ObterTotal(NFe.Classes.NFe nfe)
+        {
+            var detalhes = nfe.infNFe.det;
+
+            var total = new total
+            {
+                ICMSTot = new ICMSTot
+                {
+                    vBC = 0.0m,
+                    vBCST = 0.0m,
+                    vCOFINS = 0.0m,
+                    vICMSUFDest = 0.0m,
+                    vFCPUFDest = 0.0m,
+                    vICMSUFRemet = 0.0m,
+                    vICMSDeson = 0.0m,
+                    vII = 0.0m,
+                    vIPI = 0.0m,
+                    vPIS = 0.0m,
+                    vProd = detalhes.Sum(x => x.prod.vProd),
+                    vST = 0.0m,
+                    vDesc = 0.0m,
+                    vSeg = 0.0m,
+                    vOutro = 0.0m,
+                    vFrete = 0.0m,
+                    vFCP = 0.0m,
+                    vFCPST = 0.0m,
+                    vFCPSTRet = 0.0m,
+                    vIPIDevol = 0.0m,
+                    vNF = detalhes.Sum(x => x.prod.vProd)
+                }
+            };
+
+            return total;
         }
     }
 }
